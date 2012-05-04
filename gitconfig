@@ -1,0 +1,9 @@
+[user]
+	name = Jeanluc Chasseriau
+	email = jeanluc@lo.cx
+
+[color]
+	ui = true
+	diff = true
+	status = true
+	branch = true

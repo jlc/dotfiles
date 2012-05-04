@@ -1,0 +1,11 @@
+# Little Brother Database
+#
+# Link mutt and other data sources
+
+METHODS="m_muttalias m_osx_addressbook"
+
+MUTT_DIRECTORY="$HOME/.mutt"
+MUTTALIAS_FILES=".muttrc .mail_aliases muttrc aliases"
+
+# cf. lbdb.rc
+#SORT_OUTPUT=adress

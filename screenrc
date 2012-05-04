@@ -1,0 +1,10 @@
+# here is my own little screenrc file :)
+
+caption always
+#                hostname | nb_screen/name | screen_list | zfill | load | week_day date - time"
+caption string "%{= RW}%H%{-} | %{= Wr}%3n/%t%{-} | %w %= (load %l) | %D %d/%m/%Y - %c"
+
+startup_message off
+
+defscrollback 5000
+
