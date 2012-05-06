@@ -71,17 +71,6 @@ autocmd BufNewFile,BufRead /var/folders/+O/* set autoindent expandtab textwidth=
 " terminal color = 256 or 88 ?
 set t_Co=256
 
-" have a look: http://yukihiro.nakadaira.googlepages.com/vim-color.html
-syntax on
-" ex: highlight Comment cterm=bold ctermfg=DarkCyan ctermbg=DarkGreen
-" highlight Comment ctermfg=DarkCyan
-
-" set colors depending on background color
-set background=dark
-" set background=light
-colorscheme elflord
-" hi Comment ctermfg=darkcyan
-
 set cursorline
 
 " Avoid beeping when ESC is pressed
@@ -195,6 +184,7 @@ fun SetupVAM()
     \ 'fugitive', 'gitv', 'Command-T',
     \ 'rainbow_parentheses',
     \ 'snipmate', 'snipmate-snippets',
+    \ 'Solarized',
     \ 'vim-addon-async',
     \ 'vim-scala-behaghel',
     \ 'vim-async-beans',
@@ -224,6 +214,13 @@ fun SetupVAM()
 endf
 call SetupVAM()
 
+syntax on
+set background=dark
+
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+
+colorscheme solarized " elflord
 
 finish
 
