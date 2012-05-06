@@ -1,0 +1,382 @@
+#
+# muttrc file 
+#
+
+# Based on a friend muttrc
+# TODO: clean, comments properly and continue tuning
+
+# -------------------------------------------------------------------------------------
+# QUICK REMINDER
+# -------------------------------------------------------------------------------------
+# :set ?folder -> display the value of "folder"
+
+# -------------------------------------------------------------------------------------
+# DOC
+# -------------------------------------------------------------------------------------
+# good manual: http://www.rdrop.com/docs/mutt/manual.html
+
+# muttrcbuilder: http://muttrcbuilder.org/
+
+# multi-account: !!!
+# http://www.df7cb.de/blog/2010/Using_multiple_IMAP_accounts_with_Mutt.html
+
+# DOC for osx:
+# - http://log.antiflux.org/grant/2006/11/22/mutt-with-imap-and-ssl-on-os-x
+# - http://www.mutt.org/doc/manual/manual-3.html
+
+# Enable with Gmail:
+# http://lifehacker.com/5574557/how-to-use-the-fast-and-powerful-mutt-email-client-with-gmail
+# http://cache.gawker.com/assets/images/lifehacker/2010/06/muttrc-gmail.txt
+
+# -------------------------------------------------------------------------------------
+# OPTIONS
+# -------------------------------------------------------------------------------------
+# Headers
+# TODO: check folder-hook: we can define a my_hdr depending on folder, therefore being able to send from different email address depending on which folder we are (pro, perso...etc.)
+#
+# my_hdr X-message-flag: Outlook: spreading viruses since 1997! http://www.rodos.net/outlook/ 
+my_hdr X-Operating-System: `uname -smr` 
+
+# imap
+set imap_idle
+set imap_check_subscribed # check regularly every subscribed imap folders
+set imap_keepalive = 300 # maximum amount of time mutt will wait before polling IMAP connections to prevent server from closing them
+set mail_check=120 	# check for new mail every 2 mins when user is active
+set timeout=120			# check for new mail every 2 mins when user is not active
+
+# smtp
+set use_envelope_from # deliver the mail, forcing use the same address for the envelope as for the From: header field.
+##set sendmail="/opt/local/bin/msmtp" use to avoid localhost sendmail and to use a remote server
+set sendmail="/usr/sbin/sendmail"
+set sendmail_wait=-1  # send in background
+
+hdr_order Date From To Cc
+
+# handle html email
+alternative_order text/plain text/html *
+auto_view text/html
+
+set header_cache="~/.mutt/cache/headers" 
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file="~/.mutt/cache/certificates"
+
+# sidebar
+#set sidebar_width=24
+#set sidebar_visible=no
+#set sidebar_delim='|'
+#set sidebar_sort=no
+
+set query_command = "lbdbq '%s'" # little brother database 
+
+set charset=utf-8
+set move=no		# don't move messages to mbox right away
+set sleep_time=0
+
+set imap_servernoise=no
+#set imap_force_ssl=no
+
+set use_domain=YES # qualify all local addresses (ones without the @host portion) with the value of `` $hostname''
+
+set help # help lines describing the bindings for the major functions provided by each menu are displayed on the first line of the screen
+set history=10
+set allow_8bit		# allow 8-bit coding
+set use_8bitmime
+set delete=yes	# confirm deletion on exit
+set attribution="%n (%u) writes:"
+set include=ask-yes		# auto include msg on reply
+set edit_hdrs		# allow edit headers at compose time
+#set autoedit		# jump right to editor on Reply
+set editor="vim +9"
+#unset floating_prompt	# always prompt at bottom of screen
+#set header		# include full header in compose
+#unset honor_length	# needed for the %l command in hdr_format
+unset mark_old		# don't show old unread msgs as 'O'
+set mbox=+received
+set reverse_alias
+#set mime_fwd		# Forwards are MIME attachment
+set print_cmd="a2ps -R --columns=1 -B | lpr"
+set status_on_top
+#set web_browser="lynx %s"
+set noconfirmappend
+unset markers
+
+set pipe_decode		# Weed + decode before piping
+
+set to_chars="L.+C>"
+#set quote_regexp="^[>|:}]"
+
+set reverse_alias
+
+#
+# Tagging -- no need to do explicit tagging
+# functions in the index menu which affect a message will be applied to all tagged messages (if there are any). 
+# When unset, you must first use the tag-prefix function (default: ";") to make the next function apply to all tagged messages
+#
+set auto_tag
+
+#
+# Pager
+#
+set pager_context=1
+set pager_stop
+#set pager_format=""
+
+
+# Threads
+
+set sort='threads'
+set sort_aux='reverse-last-date-received' # When sorting by threads, controls how threads are sorted in relation to other threads, and how the branches of the thread trees are sorted.
+set pager_index_lines=8
+
+#set thread_chars="\`+-|"
+set tilde
+
+# Headers 
+set status_format="== $my_mailbox_name == %f [%r][%M/%m msgs, %n new] Sort: %s %?n?new? %?t?tagged? %|="
+set forw_format="Fwd: \"%s\" <%a>"
+#set index_format="%4C %Z %M %2N %-18.18L [%4l] %s" 
+
+# forward message including attachments
+set mime_forward=yes
+set mime_forward_rest=yes
+
+# -------------------------------------------------------------------------------------
+# IGNORE
+# -------------------------------------------------------------------------------------
+
+#
+# Headers that I don't want displayed
+#
+
+# THESE MAY BE IGNORED...
+# Let's see with experience...
+
+# ignore received return-path ignore content- precedence x-sun
+# ignore message-id mime-version resent-to x-loop x-mailing-list status x-status
+# ignore path illegal-object xref nntp-posting-host lines references x-sender
+# ignore sender x-url x-uri x-roberto x-remibp x-authentication- x400-
+# ignore x-operating-system in-reply-to disclaimer x-face
+# ignore x-phone x-pgp-fingerprint x-disclaimer x-pgp-keyid resent-message-id
+# ignore resent-received resent-date
+# ignore x-confirm-reading x-pmrqc old-return-path encoding
+# ignore discarded-x400 sensitivity importance autoforwarded
+# ignore original-encoded- x-mts comments x-received
+# ignore x-msmail- x-priority x-mailer
+# ignore List-Help List-Post List-Subscribe List-Id List-Unsubscribe List-Archive
+# 
+# ignore X-Original-To Delivered-To X-Accept-Language In-Reply-To \
+# 	X-DSPAM-Result X-DSPAM-Signature X-DSPAM-User Precedence \
+# 	X-Virus-Scanned List-Post List-Help List-Unsubscribe \
+# 	List-Subscribe X-Antivirus DomainKey-Signature \
+# 	X-Attribution X-AV-Checked List-Id List-Archive X-Mailman-Version \
+# 	X-BeenThere X-Enigmail-Supports X-Enigmail-Version \
+# 	X-Spam-Score X-Spam-Report X-OriginalArrivalTime X-GPG-Public-Key \
+# 	X-Priority X-MSMail-Priority X-MimeOLE
+
+# for gmail
+#ignore "DKIM-Signature:"
+#ignore "Authentication-Results:"
+
+# -------------------------------------------------------------------------------------
+# EXTERNAL SOURCES
+# -------------------------------------------------------------------------------------
+###source ~/.mutt.gpg  
+#source ~/.mutt/aliases
+
+# -------------------------------------------------------------------------------------
+# FOLDER HOOKS
+# -------------------------------------------------------------------------------------
+#
+# Hooks for certain folders
+#
+# Change settings based on which mailbox we are reading.
+# folder-hook [!]regex command
+# regex: regular expression to specify in which mailboxes to execute command before loading.
+# '!' is a shortcut for $spoolfile (must be specified inside simple or double quotes to distinguish it from the logical "not" operator.
+#
+folder-hook ldp 'set index_format="%3C %M %S %-20.20n [%4l] %s"'
+#"%?M?(#%03M)&(%4l)?"
+folder-hook ldp 'set pager_index_lines=0'
+
+folder-hook '!' 'set index_format="%4C %Z %{%d %b} %-18.18L [%4l] %s"'
+#folder-hook '!' my_hdr From: "first and last name" <email>
+#folder-hook '!' my_hdr Organization: My dear organization
+folder-hook '!' set pager_index_lines=0
+#folder-hook '!' 'set signature="~/.mutt/signature/this_organization"' # hopefully set by default
+
+macro index \e| c=something\n
+
+folder-hook =bugtraq 'set index_format="%4C %Z %{%b %d} %-18.18L [%4l] %s"'
+folder-hook =commit.* 'set pager_index_lines=8'
+folder-hook =current 'set pager_index_lines=8'
+folder-hook =hackers 'set pager_index_lines=8'
+
+# default options
+#folder-hook .		set sort=threads
+#folder-hook .		set index_format="%4C %Z %{%m %b} %-18.18L [%4l] %s"
+
+folder-hook     (^|/)out$      'set index_format="%{%m %b} %-18.18L [%4l] %s"'
+folder-hook     (^|/)out$      'set sort=date-sent'
+
+#folder-hook ldp set hdr_format="%3C %S %-20.20n [%4l] %s"
+#folder-hook bugtraq set hdr_format="%4C %Z %{%b %d} %-18.18L [%4l] %s"
+
+
+
+# -------------------------------------------------------------------------------------
+# SEND HOOKS
+# -------------------------------------------------------------------------------------
+# This command can be used to execute arbitrary configuration commands based upon recipients of the message.
+# send-hooks for attribution & signature
+#
+
+#send-hook jeanluc "set signature=''"
+send-hook	.	'set attribution="%n (%u) writes:"'
+
+#send-hook	ldp		set remote_sig=~/.signature.ldp
+#send-hook      .*@.*rh\.dk       "set signature='.signature.rh'"
+
+send-hook	ldp@		set attribution="%n écrit:"
+#send-hook	freenix-ldp@		set remote_sig=~/.sig238
+
+# -------------------------------------------------------------------------------------
+# SAVE HOOKS
+# -------------------------------------------------------------------------------------
+###save-hook email@hostname ~/Mail/email
+
+# -------------------------------------------------------------------------------------
+# MISC HOOKS
+# -------------------------------------------------------------------------------------
+###open-hook \\.gz$ "gzip -cd %f > %t"
+###close-hook \\.gz$ "gzip -c %t > %f"
+###append-hook \\.gz$ "gzip -c %t >> %f"
+
+# -------------------------------------------------------------------------------------
+# KEY BINDINGS
+# -------------------------------------------------------------------------------------
+
+# urlview (ctrl^b)
+# index: macro index \cb "|urlview\n" "open url with urlview"
+# alternative: ... <pipe-entry>'urlview'<enter> ...
+macro pager \cb "|urlview\n" "open url with urlview"
+
+# save attachments into a directory
+# add/remove "<enter>" to be able to confirm
+macro attach W <save-entry><kill-line>/Users/jeanluc/Downloads/email-attachments/<enter>
+
+# Save & sync
+macro index \er s>\n$*
+
+# SPAM
+
+# head menu
+macro pager \e0 ':set pager_index_lines=0'
+macro pager \e1 ':set pager_index_lines=1'
+macro pager \e2 ':set pager_index_lines=2'
+macro pager \e3 ':set pager_index_lines=3'
+macro pager \e4 ':set pager_index_lines=4'
+macro pager \e5 ':set pager_index_lines=5'
+macro pager \e6 ':set pager_index_lines=6'
+macro pager \e7 ':set pager_index_lines=7'
+macro pager \e8 ':set pager_index_lines=8'
+macro pager \e9 ':set pager_index_lines=9'
+#macro pager \e= ':set pager_index_lines=10'
+macro pager \e! ':set pager_index_lines=11'
+#macro pager \e" ':set pager_index_lines=12'
+macro pager \e\# ':set pager_index_lines=13'
+macro pager \e¤ ':set pager_index_lines=14'
+macro pager \e% ':set pager_index_lines=15'
+macro pager \e& ':set pager_index_lines=16'
+macro pager \e/ ':set pager_index_lines=17'
+macro pager \e( ':set pager_index_lines=18'
+macro pager \e) ':set pager_index_lines=19'
+
+# example:
+# macro generic G <shell-escape>'fetchmail'<enter> 'Run fetchmail' # equivalent to !fetchmail
+
+
+# -------------------------------------------------------------------------------------
+# COLOR DEFINITIONS
+# -------------------------------------------------------------------------------------
+
+# use solarized colors
+# default solarized colors
+#source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
+# modified colors in order to use default background color
+source ~/.mutt/mutt-colors-solarized-dark-256-background-default.muttrc
+
+# use "default" for default
+#color normal white default # black
+#color hdrdefault brightcyan default # black
+#color quoted yellow blue
+#color signature brightred default # black
+#color indicator brightcyan blue
+#color error black yellow
+#color status yellow blue
+#color tree cyan default # black        # the thread tree in the index menu
+#color tilde magenta default # black
+#color message cyan default #black
+#color markers cyan default #black
+#color attachment magenta default #black
+#color search black green        # how to hilite search patterns in the pager
+
+#color index green black "~t jeanluc@lo.cx"
+
+# Phil's colors
+#color index red black "~f monitoring@domain ~s CRITICAL"
+#color index green black "~f monitoring@domain ~s RECOVERY"
+#color index yellow black "~f monitoring@domain ~s WARNING"
+#color index red black "~f monitoring@bis ~s Critical:"
+#color index green black "~f monitoring@bis ~s Ok:"
+#color index yellow black "~f monitoring@bis ~s Warning:"
+#color index cyan black "~f root@"
+
+#color header yellow black ^(From|Subject):
+#color body yellow black "(ftp|http)://[^ ]+"    # point out URLs
+#color body cyan black [-a-z_0-9.]+@[-a-z_0-9.]+ # e-mail addresses
+#color underline green black
+
+
+
+
+
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+
+### ACCOUNT EXAMPLE 
+# SSH
+
+# set preconnect="ssh -f -q -L 1430:mail.domain.com:143 mail.domain.com sleep 20 </dev/null >/dev/null"
+# set folder="imap://localhost:1430/"
+# set spoolfile="imap://localhost:1430/INBOX"
+# set postponed="imap://localhost:1430/postponed"
+
+# Maildir
+
+###set folder="imap://mail:1430/INBOX"
+###set spoolfile="imap://mail:1430/INBOX"
+###set postponed="+postponed"
+
+# Mailbox
+
+# set folder="imap://mail/"
+# set spoolfile="imap://mail/INBOX"
+# set postponed="imap://mail/postponed"
+
+
+# other account options
+## from DOC ##unset record         # no sent-mail folder
+## from DOC ##fcc-hook !(~l|~p) !  # save non-list, non-to-me messages to the inbox
+## from DOC ##set ssl_force_tls
+## from DOC ##set text_flowed  # use format=flowed
+## from DOC ##unset wait_key   # return immediately from external programs
+## from DOC ##set encode_from  # use quoted-printable for From at the start of a line
+## from DOC ##unset metoo      # remove me from CC
+## from DOC ##set autoedit
+## from DOC ##set read_inc=100
+
+
+

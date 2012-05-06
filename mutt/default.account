@@ -1,0 +1,27 @@
+# Account
+# Describe options specifics to an account (user, hosts...)
+# Start mutt with: mutt -F account.name
+
+set from="Name <email@hostname>"
+set hostname="hostname"
+set realname="Name"
+my_hdr From: "name <email@hostname>"
+my_hdr Organization: "Organization name"
+
+set signature="~/.mutt/signature/hostname" # check also *-hook
+
+set imap_user="username"
+set imap_pass=`security find-generic-password -g -s imap.hostname.com 2>&1 >/dev/null | cut -d\" -f2` # find-internet-password -g -r imap -s imap.hostname.com
+
+set smtp_url="smtp://username@smtp.hostname.com:587/"
+set smtp_pass=`security find-generic-password -g -s imap.hostname.com 2>&1 >/dev/null | cut -d\" -f2`
+
+set folder="imaps://imap.hostname.com:993" # mailboxes have to be after "set folder" for the + to work
+set postponed = "+Drafts"
+set record = "+Sent" # ex phil: +out
+set spoolfile="+INBOX"
+
+set my_mailbox_name="email@hostname.com"
+
+source ~/.mutt/muttrc
+

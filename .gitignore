@@ -2,3 +2,7 @@ vim/addons
 vim/cache
 vim/colors
 vim/.netrwhist
+mutt/cache/bodies
+mutt/cache/certificates
+mutt/cache/headers
+mutt/account.*
