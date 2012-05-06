@@ -31,10 +31,10 @@ export LANG=en_GB.UTF-8
 export PAGER="less"
 
 # svn
-export SVN_EDITOR=vim
+export SVN_EDITOR=/usr/local/bin/vim
 
 # editor
-export EDITOR=vim
+export EDITOR=/usr/local/bin/vim
 # if using vi as an editor, zsh switch to "vi mode" automaticaly, which disable ctrl+a, ctrl+e...etc. use "emacs mode"
 #bindkey -e
 
