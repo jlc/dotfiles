@@ -10,13 +10,18 @@ HISTSIZE=1000
 SAVEHIST=1000
 #HISTFILE=~/.history
 
+unsetopt correct_all
+
+# path
+export PATH=/usr/local/bin:$PATH
+
 # term
-export TERM=screen
+#export TERM=screen-256color
 
 # Locale
 # default for all unset LC_* variables
 # used by hunspell for spell check
-export LANG=en_GB
+export LANG=en_GB.UTF-8
 
 # ls colors
 #export CLICOLOR="YES"
