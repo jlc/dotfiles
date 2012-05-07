@@ -120,13 +120,13 @@ set auto_tag
 set pager_context=1
 set pager_stop
 #set pager_format=""
+set pager_index_lines=15
 
 
 # Threads
 
 set sort='threads'
 set sort_aux='reverse-last-date-received' # When sorting by threads, controls how threads are sorted in relation to other threads, and how the branches of the thread trees are sorted.
-set pager_index_lines=8
 
 #set thread_chars="\`+-|"
 set tilde
@@ -201,7 +201,7 @@ folder-hook ldp 'set pager_index_lines=0'
 folder-hook '!' 'set index_format="%4C %Z %{%d %b} %-18.18L [%4l] %s"'
 #folder-hook '!' my_hdr From: "first and last name" <email>
 #folder-hook '!' my_hdr Organization: My dear organization
-folder-hook '!' set pager_index_lines=0
+#folder-hook '!' set pager_index_lines=0
 #folder-hook '!' 'set signature="~/.mutt/signature/this_organization"' # hopefully set by default
 
 macro index \e| c=something\n
