@@ -6,3 +6,4 @@ mutt/cache/bodies
 mutt/cache/certificates
 mutt/cache/headers
 mutt/account.*
+mutt/signature/*.sig
