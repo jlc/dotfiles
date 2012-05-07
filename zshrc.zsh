@@ -13,7 +13,7 @@ SAVEHIST=1000
 unsetopt correct_all
 
 # path
-export PATH=/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # term
 #export TERM=screen-256color
