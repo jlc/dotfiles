@@ -5,7 +5,7 @@
 set from="Name <email@hostname>"
 set hostname="hostname"
 set realname="Name"
-my_hdr From: "name <email@hostname>"
+my_hdr From: name <email@hostname> # without quotes
 my_hdr Organization: "Organization name"
 
 set signature="~/.mutt/signature/hostname" # check also *-hook
