@@ -92,7 +92,6 @@ set editor="vim +9"
 #unset honor_length	# needed for the %l command in hdr_format
 unset mark_old		# don't show old unread msgs as 'O'
 set mbox=+received
-set reverse_alias
 #set mime_fwd		# Forwards are MIME attachment
 set print_cmd="a2ps -R --columns=1 -B | lpr"
 set status_on_top
@@ -105,6 +104,7 @@ set pipe_decode		# Weed + decode before piping
 set to_chars="L.+C>"
 #set quote_regexp="^[>|:}]"
 
+set alias_file=~/.mutt/aliases
 set reverse_alias
 
 #
@@ -181,7 +181,7 @@ set mime_forward_rest=yes
 # EXTERNAL SOURCES
 # -------------------------------------------------------------------------------------
 ###source ~/.mutt.gpg  
-#source ~/.mutt/aliases
+source ~/.mutt/aliases
 
 # -------------------------------------------------------------------------------------
 # FOLDER HOOKS
