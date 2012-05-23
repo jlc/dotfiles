@@ -1,0 +1,6 @@
+# Git configuration local
+
+[user]
+	name = Jeanluc Chasseriau
+	email = jeanluc@lo.cx
+

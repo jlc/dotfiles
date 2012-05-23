@@ -1,9 +1,14 @@
-[user]
-	name = Jeanluc Chasseriau
-	email = jeanluc@lo.cx
+# Git configuration 
 
 [color]
 	ui = true
 	diff = true
 	status = true
-	branch = true
+  branch = true
+
+# include gitconfig.local which define [user]
+# this enable Git tracking of this gitconfig 
+# which may be used in different environment.
+[include]
+  path = .gitconfig.local
+
