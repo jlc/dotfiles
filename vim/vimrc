@@ -180,17 +180,18 @@ fun SetupVAM()
   let g:vim_addon_manager.plugin_sources['vim-scala-behaghel'] = {'type': 'git', 'url': 'git://github.com/behaghel/vim-scala.git'}
   
 	let plugins = [
-    \ 'tlib', 'tmru', 'Decho', 'gnupg3645',
+    \ 'tlib', 'tmru', 'Decho', 'gnupg%3645',
     \ 'fugitive', 'gitv', 'Command-T',
+    \ 'The_NERD_Commenter',
     \ 'rainbow_parentheses',
     \ 'snipmate', 'snipmate-snippets',
     \ 'Solarized',
     \ 'vim-addon-async',
     \ 'vim-scala-behaghel',
     \ 'vim-async-beans',
-    \ 'envim'
     \ ]
 
+    " 'envim'
     " 'vim-addon-mw-utils', 
     " 'vim-addon-signs',  'vim-addon-completion', 'vim-addon-json-encoding', 
 
