@@ -108,8 +108,8 @@ let mapleader=","
 
 " tabs shortcuts (move to next/prev tab)
 " :tabnew -> new tab
-noremap <leader>ap :tabp<CR>
-noremap <leader>an :tabn<CR>
+noremap <leader>p :tabp<CR>
+noremap <leader>n :tabn<CR>
 
 " command windows shortcuts (move to next/prev error in command window (copen))
 " :copen -> new command/search window
