@@ -48,7 +48,9 @@ set shortmess=at
 
 " statusline
 " set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=%(%F%m%r%)\ %=\ %([l:%l/%L\ c:%v\ o:%o]%)\ %([%p%%]%)
+"set statusline=%(%F%m%r%)\ %=\ %([l:%l/%L\ c:%v\ o:%o]%)\ %([%p%%]%)
+"set statusline+=%{fugitive#statusline()}
+set statusline=%(%F%m%r%)\ %=\ %{fugitive#statusline()}\ %([l:%l/%L\ c:%v\ o:%o]%)\ %([%p%%]%)
 set laststatus=2
 
 set ruler
@@ -88,9 +90,8 @@ set lazyredraw
 " let myaddon_scala_path = expand('$HOME') . '/.vim/myaddons/scala'
 " exec 'set runtimepath+='.myaddon_scala_path
 
-
-" Used for CommandT
-set wildignore+=*/target/*,*.o,*.obj,.git,*.class,*.jar,*.jpg,*.png,*.gif,*.csym
+" CommandT (may be more generic)
+set wildignore+=*/target/*,*.o,*.obj,.git,*.class,*.jar,*.jpg,*.png,*.gif,*.csym,.idea
 
 " limit width to 120 and force new line (very annoying!)
 " set textwidth=120
@@ -98,6 +99,8 @@ set wildignore+=*/target/*,*.o,*.obj,.git,*.class,*.jar,*.jpg,*.png,*.gif,*.csym
 " set colorcolumn=132
 " hi ColorColumn ctermbg=darkcyan
 
+" TheNERDTree
+let NERDTreeWinSize=50
 
 " Key mapping
 " ---------------------------------------------------------
@@ -110,6 +113,8 @@ let mapleader=","
 " :tabnew -> new tab
 noremap <leader>p :tabp<CR>
 noremap <leader>n :tabn<CR>
+
+noremap <leader>d :NERDTreeToggle<CR>
 
 " command windows shortcuts (move to next/prev error in command window (copen))
 " :copen -> new command/search window
@@ -134,12 +139,13 @@ noremap <leader>go :exec 'e '. fnameescape(tlib#input#List('s','select file', sp
 
 " gitv plugin
 " ---------------------------------------------------------
-nmap <leader>gv :Gitv --all<cr>
-nmap <leader>gV :Gitv! --all<cr>
-vmap <leader>gV :Gitv! --all<cr>
+nmap <leader>gV :Gitv --all<cr>
+nmap <leader>gv :Gitv! --all<cr>
+nmap <leader>ge :Gedit<cr>
+nmap <leader>gs :Gstatus<cr>
+"vmap <leader>gV :Gitv! --all<cr>
 
 cabbrev git Git
-
 
 " Plugins
 " ---------------------------------------------------------
@@ -183,14 +189,17 @@ fun SetupVAM()
     \ 'tlib', 'tmru', 'Decho', 'gnupg%3645',
     \ 'fugitive', 'gitv', 'Command-T',
     \ 'The_NERD_Commenter',
-    \ 'rainbow_parentheses',
-    \ 'snipmate', 'snipmate-snippets',
+    \ 'The_NERD_tree',
     \ 'Solarized',
-    \ 'vim-addon-async',
+    \ 'ctrlp',
     \ 'vim-scala-behaghel',
-    \ 'vim-async-beans',
     \ ]
 
+    " \ 'envim',
+    " \ 'vim-async-beans',
+    " \ 'vim-addon-async',
+    " \ 'rainbow_parentheses',
+    " \ 'snipmate', 'snipmate-snippets',
     " 'envim'
     " 'vim-addon-mw-utils', 
     " 'vim-addon-signs',  'vim-addon-completion', 'vim-addon-json-encoding', 
@@ -215,6 +224,9 @@ fun SetupVAM()
 endf
 call SetupVAM()
 
+"
+" solarized
+" 
 syntax on
 set background=dark
 
@@ -222,6 +234,22 @@ let g:solarized_termtrans=1
 let g:solarized_termcolors=256
 
 colorscheme solarized " elflord
+
+" vimdiff colors
+" we may add ctermbg=xxx - orange: 9 - magenta: 5
+highlight DiffAdd term=reverse cterm=bold ctermfg=5
+highlight DiffChange term=reverse cterm=bold ctermfg=5
+highlight DiffText term=reverse cterm=bold ctermfg=5
+highlight DiffDelete term=reverse cterm=bold ctermfg=5
+
+"
+" ctrlp
+"
+
+" c: the directory of the current file - r: nearest current ancestor containing .git, .hg...etc. - a: ... - 0 or '': disable
+" default 'ra'
+let g:ctrlp_working_path_mode = ''
+
 
 finish
 
