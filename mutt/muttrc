@@ -13,6 +13,9 @@
 # -------------------------------------------------------------------------------------
 # DOC
 # -------------------------------------------------------------------------------------
+# Macros
+# http://tldp.org/HOWTO/Mutt-GnuPG-PGP-HOWTO-7.html
+
 # good manual: http://www.rdrop.com/docs/mutt/manual.html
 
 # muttrcbuilder: http://muttrcbuilder.org/
@@ -140,6 +143,11 @@ set forw_format="Fwd: \"%s\" <%a>"
 set mime_forward=yes
 set mime_forward_rest=yes
 
+# Attachments
+# TODO: should enable or disable specific attachements type (*/.* may be text/calendar)
+attachments +A */.*
+attachments +I */.*
+
 # -------------------------------------------------------------------------------------
 # IGNORE
 # -------------------------------------------------------------------------------------
@@ -198,7 +206,9 @@ folder-hook ldp 'set index_format="%3C %M %S %-20.20n [%4l] %s"'
 #"%?M?(#%03M)&(%4l)?"
 folder-hook ldp 'set pager_index_lines=0'
 
-folder-hook '!' 'set index_format="%4C %Z %{%d %b} %-18.18L [%4l] %s"'
+#folder-hook '!' 'set index_format="%4C %Z %{%d %b} %-18.18L [%4l] %s"'
+# display number of attachements if they are regognized
+folder-hook '!' 'set index_format="%4C %Z %{%d %b} %-18.18L [%?X?{%2X}&%4c?] %s"'
 #folder-hook '!' my_hdr From: "first and last name" <email>
 #folder-hook '!' my_hdr Organization: My dear organization
 #folder-hook '!' set pager_index_lines=0
@@ -293,6 +303,9 @@ macro pager \e) ':set pager_index_lines=19'
 
 # example:
 # macro generic G <shell-escape>'fetchmail'<enter> 'Run fetchmail' # equivalent to !fetchmail
+
+# modify and reload alias file <ESC>a
+macro   index   \ea     "!vim ~/.mutt/aliases\n:source ~/.mutt/aliases\n"
 
 
 # -------------------------------------------------------------------------------------
