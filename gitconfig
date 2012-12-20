@@ -12,3 +12,26 @@
 [include]
   path = .gitconfig.local
 
+[alias]
+  ci = commit
+  br = branch
+  co = checkout
+  st = status
+  re = remote
+  rev = remote -v
+  di = diff
+  dic = diff --cached
+  ai = add -i
+  ri = rebase -i
+  gr = grep
+  logr = log --graph
+  log1 = log -n 1
+  log2 = log -n 2
+  log3 = log -n 3
+
+[diff]
+  tool = vimdiff
+  #tool = meld
+
+[difftool]
+  prompt = false
