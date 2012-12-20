@@ -1,9 +1,9 @@
-# zshrc.zsh
-#
+# zshrc.zsh #
 # may be sourced in .zshrc (if used with oh-my-zsh)
 
 # aliases
 alias vi='vim'
+alias ta='tig --all'
 
 # zsh options
 HISTSIZE=1000
@@ -13,7 +13,7 @@ SAVEHIST=1000
 unsetopt correct_all
 
 # path
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # term
 #export TERM=screen-256color
@@ -37,6 +37,16 @@ export SVN_EDITOR=/usr/local/bin/vim
 export EDITOR=/usr/local/bin/vim
 # if using vi as an editor, zsh switch to "vi mode" automaticaly, which disable ctrl+a, ctrl+e...etc. use "emacs mode"
 #bindkey -e
+
+# python path (brew installed stuffs)
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
+
+# JAVA
+export JAVA_HOME=/Library/Java/Home
+export JAVA_OPTS="-XX:MaxPermSize=1024m"
+
+# SBT
+export SBT_OPTS=-XX:MaxPermSize=256M
 
 # MacPort
 # installation path
