@@ -9,7 +9,15 @@
 ;;
 ;; This file is NOT part of GNU Emacs.
 
-(require 'cl)				; common lisp goodies, loop
+;; jlc: add melpa
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
+
+;; common lisp goodies (loop)
+(require 'cl)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -26,53 +34,99 @@
 ;; set local recipes
 (setq
  el-get-sources
- '((:name buffer-move			; have to add your own keys
-	  :after (lambda ()
-		   (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-		   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-		   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-		   (global-set-key (kbd "<C-S-right>")  'buf-move-right)))
+ '(;;(:name buffer-move			; have to add your own keys
+	 ;; :after (lambda ()
+		;;   (global-set-key (kbd "<C-S-up>")     'buf-move-up)
+		;;   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
+		;;   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
+		;;   (global-set-key (kbd "<C-S-right>")  'buf-move-right)))
 
    (:name smex				; a better (ido like) M-x
-	  :after (lambda ()
+	  :after (progn
 		   (setq smex-save-file "~/.emacs.d/.smex-items")
 		   (global-set-key (kbd "M-x") 'smex)
 		   (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
 
-   (:name magit				; git meet emacs, and a binding
-	  :after (lambda ()
-		   (global-set-key (kbd "C-x C-z") 'magit-status)))
+   ;; (:name magit				; git meet emacs, and a binding
+	  ;; :after (lambda ()
+		;;   (global-set-key (kbd "C-x C-z") 'magit-status)))
 
-   (:name goto-last-change		; move pointer back to last change
-	  :after (lambda ()
-		   ;; when using AZERTY keyboard, consider C-x C-_
-		   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
+   ;; (:name goto-last-change		; move pointer back to last change
+	 ;;  :after (lambda ()
+	 ;;	   ;; when using AZERTY keyboard, consider C-x C-_
+		;;   (global-set-key (kbd "C-x C-/") 'goto-last-change)))
+
+   (:name helm
+    :after (progn
+      (require 'helm-config)
+      (global-set-key (kbd "C-c h") 'helm-mini)
+      (global-set-key (kbd "C-c ,") 'helm-cmd-t)
+      (helm-mode 1) ;; helm for package install and others
+   ))
+
+   (:name projectile
+    :after (progn
+      (projectile-global-mode)
+      (setq projectile-completion-system 'grizzl)
+   ))
+
+   (:name auto-complete
+    :after (progn
+      (require 'auto-complete-config)
+      (add-to-list 'ac-dictionary-directories "~/.emacs.d/el-get/auto-complete/dict")
+
+      (set-default 'ac-sources
+                   '(ac-source-abbrev
+                     ac-source-dictionary
+                     ac-source-yasnippet
+                     ac-source-words-in-buffer
+                     ac-source-words-in-same-mode-buffers
+                     ac-source-semantic))
+
+      (ac-config-default)
+
+      (dolist (m '(c-mode c++-mode java-mode css-mode javascript-mode))
+        (add-to-list 'ac-modes m))
+
+      (global-auto-complete-mode t)
+   ))
+
+   (:name evil
+    :after (progn
+      (evil-mode 1)
+   ))
+ ))
 
 ;; now set our own packages
 (setq
  my:el-get-packages
  '(el-get				; el-get is self-hosting
-   escreen            			; screen for emacs, C-\ C-h
-   php-mode-improved			; if you're into php...
    switch-window			; takes over C-x o
-   auto-complete			; complete as you type with overlays
-   zencoding-mode			; http://www.emacswiki.org/emacs/ZenCoding
    color-theme		                ; nice looking emacs
-   color-theme-tango))	                ; check out color-theme-solarized
+   color-theme-solarized	                ; check out color-theme-solarized
+   yasnippet          ; powerful snippet mode
+   ))
 
+;; default packages from dimitri (jlc)
+   ;;escreen            			; screen for emacs, C-\ C-h
+   ;;php-mode-improved			; if you're into php...
+   ;;zencoding-mode			; http://www.emacswiki.org/emacs/ZenCoding => should be replaced by emmet (emmet.io)
+ 
 ;;
 ;; Some recipes require extra tools to be installed
 ;;
 ;; Note: el-get-install requires git, so we know we have at least that.
 ;;
-(when (el-get-executable-find "cvs")
-  (add-to-list 'my:el-get-packages 'emacs-goodies-el)) ; the debian addons for emacs
+;; jlc: not used
+;;(when (el-get-executable-find "cvs")
+;;  (add-to-list 'my:el-get-packages 'emacs-goodies-el)) ; the debian addons for emacs
 
-(when (el-get-executable-find "svn")
-  (loop for p in '(psvn    		; M-x svn-status
-		   yasnippet		; powerful snippet mode
-		   )
-	do (add-to-list 'my:el-get-packages p)))
+;; jlc: not used
+;; (when (el-get-executable-find "svn")
+;;  (loop for p in '(psvn    		; M-x svn-status
+;;		   yasnippet		; powerful snippet mode
+;;		   )
+;;	do (add-to-list 'my:el-get-packages p)))
 
 (setq my:el-get-packages
       (append
@@ -83,15 +137,16 @@
 (el-get 'sync my:el-get-packages)
 
 ;; on to the visual settings
+(setq inhibit-startup-message t)  ; no startup message
 (setq inhibit-splash-screen t)		; no splash screen, thanks
 (line-number-mode 1)			; have line numbers and
 (column-number-mode 1)			; column numbers in the mode line
 
-(tool-bar-mode -1)			; no tool bar with icons
-(scroll-bar-mode -1)			; no scroll bars
-(unless (string-match "apple-darwin" system-configuration)
-  ;; on mac, there's always a menu bar drown, don't have it empty
-  (menu-bar-mode -1))
+;; turn off tool-bar, scroll-bar, menu-bar
+(when (display-graphic-p)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+(menu-bar-mode -1)     ; no menu bar
 
 ;; choose your own fonts, in a system dependant way
 (if (string-match "apple-darwin" system-configuration)
@@ -175,3 +230,56 @@
   (set-frame-parameter nil 'fullscreen
 		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
+
+;; -- end of dimitri's kick-starter
+
+;; theme
+(load-theme 'solarized-dark t)
+
+;; line numbering
+(setq linum-format "%4d ")
+
+;; locate on macosx
+(setq locate-command "mdfind")
+
+;; scroll-preserve-screen-position
+(setq scroll-preserve-screen-position t)
+
+;; uniquify (buffers' names will be prefixed with directory names)
+(require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
+
+;; saveplace (save location when kill a buffer and returns to it next time)
+(require 'saveplace)
+  (setq-default save-place t)
+
+;; show matching parenthesis
+(show-paren-mode 1)
+(setq show-paren-delay 0)
+
+;; save backup in user directory (.emacs.d)
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                "backups"))))
+
+;; auto-refresh buffers when files have changed on disk
+(global-auto-revert-mode t)
+
+;; -- indentations
+;; change html indentation
+(add-hook 'html-mode-hook
+  (lambda ()
+    ;; Default indentation is usually 2 spaces, changing to 4.
+    (set (make-local-variable 'sgml-basic-offset) 4)))
+
+(add-hook 'coffee-mode-hook
+  (lambda ()
+    (set (make-local-variable 'tab-width) 2)))
+
+;; tab width
+(setq tab-width 2)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
+;; force use of spaces instead of tab characters
+(setq-default indent-tabs-mode nil)
+
