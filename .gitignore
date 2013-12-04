@@ -10,3 +10,8 @@ mutt/cache/headers
 mutt/account.*
 mutt/aliases
 mutt/signature/*.sig
+emacs.d/.smex-items
+emacs.d/ac-comphist.dat
+emacs.d/el-get/
+emacs.d/elpa/
+emacs.d/projectile-bookmarks.eld
