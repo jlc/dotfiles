@@ -1,13 +1,7 @@
-;; emacs kicker --- kick start emacs setup
-;; Copyright (C) 2010 Dimitri Fontaine
 ;;
-;; Author: Dimitri Fontaine <dim@tapoueh.org>
-;; URL: https://github.com/dimitri/emacs-kicker
-;; Created: 2011-04-15
-;; Keywords: emacs setup el-get kick-start starter-kit
-;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
+;; emacs init.el
+;; Based on emacs kicker --- kick start emacs setup (Copyright (C) 2010 Dimitri Fontaine)
 ;;
-;; This file is NOT part of GNU Emacs.
 
 ;; jlc: add melpa
 (require 'package)
@@ -92,9 +86,39 @@
    ))
 
    (:name evil
+    :before (progn
+      ; try to avoid delay before interpret esc
+      (setq evil-esc-delay 0.0)
+    )
     :after (progn
+      ; enable scroll-up
+      (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+
+      ;;; C-g as general purpose escape key sequence.
+      ;;;
+      (defun my-esc (prompt)
+        "Functionality for escaping generally.  Includes exiting Evil insert state and C-g binding. "
+        (cond
+          ;; If we're in one of the Evil states that defines [escape] key, return [escape] so as
+          ;; Key Lookup will use it.
+          ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
+          ;; This is the best way I could infer for now to have C-c work during evil-read-key.
+          ;; Note: As long as I return [escape] in normal-state, I don't need this.
+          ;;((eq overriding-terminal-local-map evil-read-key-map) (keyboard-quit) (kbd ""))
+          (t (kbd "C-g"))))
+      (define-key key-translation-map (kbd "C-g") 'my-esc)
+      ;; Works around the fact that Evil uses read-event directly when in operator state, which
+      ;; doesn't use the key-translation-map.
+      (define-key evil-operator-state-map (kbd "C-g") 'keyboard-quit)
+
       (evil-mode 1)
    ))
+    
+   (:name flycheck
+    :after (progn
+      (add-hook 'after-init-hook #'global-flycheck-mode)
+   ))
+    
  ))
 
 ;; now set our own packages
@@ -105,6 +129,9 @@
    color-theme		                ; nice looking emacs
    color-theme-solarized	                ; check out color-theme-solarized
    yasnippet          ; powerful snippet mode
+   grizzl
+   scala-mode2
+   ensime
    ))
 
 ;; default packages from dimitri (jlc)
