@@ -41,9 +41,10 @@
 		   (global-set-key (kbd "M-x") 'smex)
 		   (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
 
-   ;; (:name magit				; git meet emacs, and a binding
-	  ;; :after (lambda ()
-		;;   (global-set-key (kbd "C-x C-z") 'magit-status)))
+   (:name magit				; git meet emacs, and a binding
+	  :after (progn
+		   ;;(global-set-key (kbd "C-x C-z") 'magit-status)))
+     ))
 
    ;; (:name goto-last-change		; move pointer back to last change
 	 ;;  :after (lambda ()
@@ -111,6 +112,9 @@
       ;; doesn't use the key-translation-map.
       (define-key evil-operator-state-map (kbd "C-g") 'keyboard-quit)
 
+      ;; reenable great indent-region feature (indent selected region)
+      (global-set-key (kbd "C-TAB") 'indent-region)
+
       (evil-mode 1)
    ))
     
@@ -132,6 +136,8 @@
    grizzl
    scala-mode2
    ensime
+   coffee-mode
+   less-css-mode ; recipe copied from https://github.com/clear-code/emacs.d/blob/master/config/el-get/recipes/less-css-mode.rcp
    ))
 
 ;; default packages from dimitri (jlc)
@@ -189,11 +195,13 @@
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
 
-;; under mac, have Command as Meta and keep Option for localized input
+;; under mac
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'none))
+  ; have Command as Meta and keep Option for localized input
+  ;(setq mac-command-modifier 'meta)
+  ;(setq mac-option-modifier 'none)
+  )
 
 ;; Use the clipboard, pretty please, so that copy/paste "works"
 (setq x-select-enable-clipboard t)
