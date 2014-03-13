@@ -303,12 +303,25 @@
 ;; change html indentation
 (add-hook 'html-mode-hook
   (lambda ()
-    ;; Default indentation is usually 2 spaces, changing to 4.
-    (set (make-local-variable 'sgml-basic-offset) 4)))
+    (setq sgml-basic-offset 2)))
+
+(add-hook 'nxml-mode-hook
+  (lambda ()
+    (setq tab-width 4)
+    (setq nxml-child-indent tab-width)
+    (setq nxml-outline-child-indent tab-width)))
+
+(add-hook 'css-mode-hook
+  (lambda ()
+    (setq tab-width 4)))
+
+(add-hook 'js-mode-hook
+  (lambda ()
+    (setq tab-width 2)))
 
 (add-hook 'coffee-mode-hook
   (lambda ()
-    (set (make-local-variable 'tab-width) 2)))
+    (setq tab-width 2)))
 
 ;; tab width
 (setq tab-width 2)
