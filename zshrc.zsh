@@ -4,6 +4,7 @@
 # aliases
 alias vi='vim'
 alias ta='tig --all'
+alias mvniskiptests='mvn install -DskipTests'
 
 # zsh options
 HISTSIZE=1000
@@ -12,8 +13,18 @@ SAVEHIST=1000
 
 unsetopt correct_all
 
-# path
+# development specific
+# play custom version (not used anymore)
+export DEV_PATH=$HOME/src/external/Play20
+
+# system wide
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+
+# xcode binaries
+export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
+
+# node packages
+export PATH=$PATH:/usr/local/share/npm/bin
 
 # term
 #export TERM=screen-256color
@@ -42,11 +53,14 @@ export EDITOR=/usr/local/bin/vim
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
 
 # JAVA
-export JAVA_HOME=/Library/Java/Home
+export JAVA_HOME=`/usr/libexec/java_home -d64 -v 1.7`
 export JAVA_OPTS="-XX:MaxPermSize=1024m"
 
+# MAVEN
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512m"
+
 # SBT
-export SBT_OPTS=-XX:MaxPermSize=256M
+export SBT_OPTS="-Xmx1g -XX:MaxPermSize=512M"
 
 # MacPort
 # installation path
