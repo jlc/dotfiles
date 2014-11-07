@@ -51,13 +51,14 @@
 	 ;;	   ;; when using AZERTY keyboard, consider C-x C-_
 		;;   (global-set-key (kbd "C-x C-/") 'goto-last-change)))
 
-   (:name helm
-    :after (progn
-      (require 'helm-config)
-      (global-set-key (kbd "C-c h") 'helm-mini)
-      (global-set-key (kbd "C-c ,") 'helm-cmd-t)
-      (helm-mode 1) ;; helm for package install and others
-   ))
+;; helm might be very annoying with `cd`
+;;    (:name helm
+;;     :after (progn
+;;       (require 'helm-config)
+;;       (global-set-key (kbd "C-c h") 'helm-mini)
+;;       (global-set-key (kbd "C-c ,") 'helm-cmd-t)
+;;       (helm-mode 1) ;; helm for package install and others
+;;    ))
 
    (:name projectile
     :after (progn
@@ -180,10 +181,11 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
 (menu-bar-mode -1)     ; no menu bar
+(tool-bar-mode -1)
 
 ;; choose your own fonts, in a system dependant way
 (if (string-match "apple-darwin" system-configuration)
-    (set-face-font 'default "Monaco-13")
+    (set-face-font 'default "Monaco-11")
   (set-face-font 'default "Monospace-10"))
 
 (global-hl-line-mode)			; highlight current line
@@ -321,7 +323,7 @@
 
 (add-hook 'coffee-mode-hook
   (lambda ()
-    (setq tab-width 2)))
+    (setq coffee-tab-width 2)))
 
 ;; tab width
 (setq tab-width 2)
