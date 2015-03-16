@@ -131,14 +131,14 @@
  my:el-get-packages
  '(el-get				; el-get is self-hosting
    switch-window			; takes over C-x o
-   color-theme		                ; nice looking emacs
-   color-theme-solarized	                ; check out color-theme-solarized
+   solarized-emacs
    yasnippet          ; powerful snippet mode
    grizzl
    scala-mode2
+   sbt-mode
    ensime
    coffee-mode
-   less-css-mode ; recipe copied from https://github.com/clear-code/emacs.d/blob/master/config/el-get/recipes/less-css-mode.rcp
+   less-css-mode
    ))
 
 ;; default packages from dimitri (jlc)
@@ -332,4 +332,11 @@
 
 ;; force use of spaces instead of tab characters
 (setq-default indent-tabs-mode nil)
+
+;; -- ensime
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+;; -- PATH env
+(setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
+
 
