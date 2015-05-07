@@ -4,6 +4,7 @@ vim/cache
 vim/colors
 vim/.netrwhist
 vim/spell/*
+vim/share
 mutt/cache/bodies
 mutt/cache/certificates
 mutt/cache/headers
