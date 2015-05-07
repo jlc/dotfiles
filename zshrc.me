@@ -1,0 +1,67 @@
+# zshrc.zsh #
+# may be sourced in .zshrc (if used with oh-my-zsh)
+
+# aliases
+alias vi='vim'
+alias ta='tig --all'
+alias mvniskiptests='mvn install -DskipTests'
+
+# zsh options
+HISTSIZE=1000
+SAVEHIST=1000
+#HISTFILE=~/.history
+
+unsetopt correct_all
+
+# system wide
+export PATH=$HOME/bin:$PATH
+
+# term
+# export TERM=screen-256color
+
+# Locale
+# default for all unset LC_* variables
+# used by hunspell for spell check
+export LANG=en_GB.UTF-8
+
+# ls colors
+# export CLICOLOR="YES"
+# export LSCOLORS="gxfxcxdxbxegedabagacad"
+
+# man
+export PAGER="less"
+
+# svn
+export SVN_EDITOR=/usr/local/bin/vim
+
+# editor
+export EDITOR=/usr/local/bin/vim
+# if using vi as an editor, zsh switch to "vi mode" automaticaly, which disable ctrl+a, ctrl+e...etc. use "emacs mode"
+#bindkey -e
+
+# python path (brew installed stuffs)
+# export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
+
+# JAVA
+export JAVA_HOME=`/usr/libexec/java_home -d64 -v 1.7`
+export JAVA_OPTS="-XX:MaxPermSize=1024m"
+
+# MAVEN
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512m"
+
+# SBT
+export SBT_OPTS="-Xmx1g -XX:MaxPermSize=512M"
+
+# ccache
+# export PATH=$MACPORT/libexec/ccache:$PATH
+
+# postgresql
+# export PATH=$MACPORT/lib/postgresql83/bin:$PATH
+
+
+# ########################
+# prompt
+# ########################
+
+# prompt is offered by oh-my-zsh :)
+
